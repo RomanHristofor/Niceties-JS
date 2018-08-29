@@ -9,6 +9,12 @@ function foo() {
 }  
 foo();
 
+say('user'); // undefined, user
+var phrase = 'Hello';
+function say(name) {
+  console.log( `${phrase}, ${name}` );
+}
+
 var foo = 1; 
 function bar() { 
     if (!foo) { 
@@ -27,11 +33,112 @@ function b() {
 b();
 console.log(a); // 1
 ```
+
+## Closures
+```
+for (var i = 0; i < 10; i++) {
+  setTimeout(function() {
+    console.log(i); // 10 10
+  },0);
+}
+
+for (let i = 0; i < 10; i++) {
+  setTimeout(function() {
+    console.log(i); // from 0 to 9
+  },0);
+}
+
+for (var i = 0; i < 10; i++) {
+  (function(i){
+    setTimeout(function() {
+      console.log(i); // from 0 to 9
+    },0);
+  }(i));
+}
+
+
+var makeCounter = function() {
+  var privateCounter = 0;
+  function changeBy(val) {
+    privateCounter += val;
+  }
+  return {
+    increment: function() {
+      changeBy(1);
+    },
+    decrement: function() {
+      changeBy(-1);
+    },
+    value: function() {
+      return privateCounter;
+    }
+  }  
+};
+
+var Counter1 = makeCounter();
+var Counter2 = makeCounter();
+
+Counter1.increment();
+Counter1.increment();
+console.log(Counter1.value()); //2
+
+console.log(Counter2.value()); //0
+```
+
+## Currying
+```
+var sum = function (a) {
+  return function(b) {
+    return a + b;
+  }
+}
+sum(5)(6); // 11
+
+// Or
+const sum = a => b => a + b;
+sum(5)(6); // 11
+
+```
+
 ## Typing
 ```
-var a = '5' + 1; // '51'
+var a = '5' + 1; // "51"
 var a = '5' - 1; // 4
+
+6 / "3" // 2
+
+"2" * "3" // 6
+
+4 + 5 + "px" // "9px"
+
+"$" + 4 + 5 // "$45"
+
+"4" - 2 // 2
+
+"4px" - 2 // NaN
+ 
+7 / 0 // Infinity
+
+typeof null // "object"
+
+typeof {}[0] // "undefined"
+
+typeof ("4px" - 2) // "number"
+
+parseInt("09") // 9
+
+5 && 2 // 2
+2 && 5 // 5
+1 && 0 // 0
+0 && -1 // 0
+0 && 1 // 0
+
+5 || 0 // 5
+0 || 5 // 5
+0 || -1 // -1
+-1 || 0 // -1
 ```
+
 ## [native code]
 ```
 function baz() {
@@ -41,46 +148,159 @@ baz();
 console.log(baz); // ƒ baz() { var baz = b = 5; }
 console.log(b); // 5
 ```
-## 
-```
-for (var i = 0; i < 10; i++) {
-  setTimeout(function() {
-    console.log(i); // 10 10
-  },0);
-}
 
-for (var i = 0; i < 10; i++) {
-  (function(i){
-	  setTimeout(function() {
-    	console.log(i); // from 0 to 9
-  	},0);
-  }(i));
-}
-for (let i = 0; i < 10; i++) {
-  setTimeout(function() {
-    console.log(i); // from 0 to 9
-  },0);
-}
-```
-## 
+## Strict mode
 ```
 'use strict';
 var f = function () {
   console.log('1'); // (2) '1'
 }
+
 (function() {
   console.log('2'); // (1) '2'
 }())
+
+
+'use strict';
+NaN = 5; // TypeError
+
+'use strict';
+myVar = 12; // ReferenceError
+
+'use strict';
+0644 === 420 // SyntaxError: Octal literals are not allowed in strict mode.
+
+'use strict';
+var x;
+delete x; // SyntaxError
+
 ```
+
+## Fibonacci
+```
+function fib(n) {
+  let a = 1, b =1;
+
+  for (let i = 3; i <= n; i++) {
+    let c = a+b;
+    a = b;
+    b = c;
+  };
+  return b;
+}
+console.log(fib(7)); // 13
+```
+
+## Factorial
+```
+function fac(n) {
+  return n ? n * fac(n - 1) : 1;
+}
+console.log(fac(5)); // 120
+```
+
 ##
 ```
-var sum = function (a) {
-  return function(b) {
-    return a + b;
-  }
+let sortBubble = (arr) => {
+  let tmp, c = 0;
+
+  for (let i = arr.length - 1; i > 0; i--) {
+    for (let j = 0; j < i; j++) {
+
+      if (arr[j] > arr[j+1]) {
+        tmp = arr[j];
+        arr[j] = arr[j+1];
+        arr[j+1] = tmp;
+        c++;
+      }
+
+    }
+
+    if (c === 0) {
+        break;
+    }
+  };
+
+  return arr;
 }
-sum(5)(6); // 11
+sortBubble( [5, 20, 3, 11, 1, 17, 3, 12, 8, 10, 22]); // [1, 3, 3, 5, 8, 10, 11, 12, 17, 20, 22]
+
+
+let a = [1, 12, 5, 26, 7, 14, 3, 7, 2, 3];
+
+function quickSort( arr, left, right) {
+    let index = partition(arr, left, right);
+    if (left < index - 1)
+        quickSort(arr, left, index - 1);
+    if (index < right)
+        quickSort(arr, index, right);
+}
+
+function partition(arr, left, right) {
+    let pivot = arr[Math.floor((left + right) / 2)]
+      , i = left
+      , j = right
+      , tmp;
+
+    while (i <= j) {
+        while (arr[i] < pivot)
+            i++;
+        while (arr[j] > pivot)
+            j--;
+        if (i <= j) {
+            tmp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = tmp;
+            i++;
+            j--;
+        }
+    }
+    return i;
+}
+quickSort(a, 0, a.length-1);
+console.log(a);
+
+
+let getMaxNumber = function(arr) {
+    let min = arr[0]
+    ,   max = min;
+
+    for(let i = 0, l = arr.length; i < l; i++) {
+        if(arr[i] > max) max = arr[i];
+        if(arr[i] < min) min = arr[i];
+    }
+    return max;
+};
+console.log(getMaxNumber([2,4,55,67,9,0,6]));
+
+
+let i = 10, array = [];
+
+while (i--) {
+  array.push(function() {
+    return i + i;
+  });
+}
+console.log( [array[0](), array[1]()] ); // [-2,-2]
+
+
+let A, B;
+A = B = 'test';
+A.c = 1;
+B.c = 2;
+console.log(A.c); // undefined
+console.log(B.c); // undefined
+
+
+let f = function() { 
+  console.log(this.x);
+};
+let obj = {x: 'test'};
+
+f.prototype = obj;
+new f(); // "test"
 ```
+
 ## Descriptors
 ```
 некоторые флаги:
@@ -92,11 +312,12 @@ sum(5)(6); // 11
       value - параметру, описывающему конкретные данные, привязанные к свойству:
     * value — значение свойства
 ```
-##
+
+## Напишите функцию принимающую строку с именем файла и возвращающую его расширение
 ```
-Напишите функцию принимающую строку с именем файла и возвращающую расширение (фрагмент после последней точки)
 'some.class.js'.split('.').pop(); // "js"
 ```
+
 ## Привязка контекста (Bind, Call, Apply)
 ```
 Методы call/apply вызывают функцию с заданным контекстом и аргументами.
@@ -110,15 +331,16 @@ function bind(func, context) {
 }
 
 var user = {
-  firstName: "Вася",
+  firstName: "Vasili",
   sayHi: function() {
     console.log( this.firstName );
   }
 };
 
-setTimeout(bind(user.sayHi, user), 1000);
+setTimeout(bind(user.sayHi, user), 100);
 ```
-## структуры данных
+
+## Структуры данных
 ```
 /*** ===================================================================== ***\
  *           a           b                                 d                 *
