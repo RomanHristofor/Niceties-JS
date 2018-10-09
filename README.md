@@ -1,5 +1,10 @@
 # JS 
 
+## operator spread
+```
+[a, b, ...iterableObj] = [1, 2, 3, 4, 5]; // iterableObj -> [3, 4, 5]
+```
+
 ## Hoisting
 ```
 var a = 5;  
