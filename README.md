@@ -1,7 +1,7 @@
 # JS 
 
 ## operator spread
-```
+```javascript
 [a, b, ...iterableObj] = [1, 2, 3, 4, 5]; // iterableObj -> [3, 4, 5]
 ```
 
@@ -40,7 +40,7 @@ console.log(a); // 1
 ```
 
 ## Closures
-```
+```javascript
 for (var i = 0; i < 10; i++) {
   setTimeout(function() {
     console.log(i); // 10 10
@@ -91,7 +91,7 @@ console.log(Counter2.value()); //0
 ```
 
 ## Currying
-```
+```javascript
 var sum = function (a) {
   return function(b) {
     return a + b;
@@ -106,7 +106,7 @@ sum(5)(6); // 11
 ```
 
 ## Typing
-```
+```javascript
 var a = '5' + 1; // "51"
 var a = '5' - 1; // 4
 
@@ -145,7 +145,7 @@ parseInt("09") // 9
 ```
 
 ## [native code]
-```
+```javascript
 function baz() {
   var baz = b = 5;
 }
@@ -155,7 +155,7 @@ console.log(b); // 5
 ```
 
 ## Strict mode
-```
+```javascript
 'use strict';
 var f = function () {
   console.log('1'); // (2) '1'
@@ -182,7 +182,7 @@ delete x; // SyntaxError
 ```
 
 ## Fibonacci
-```
+```javascript
 function fib(n) {
   let a = 1, b =1;
 
@@ -197,7 +197,7 @@ console.log(fib(7)); // 13
 ```
 
 ## Factorial
-```
+```javascript
 function fac(n) {
   return n ? n * fac(n - 1) : 1;
 }
@@ -205,7 +205,7 @@ console.log(fac(5)); // 120
 ```
 
 ##
-```
+```javascript
 let sortBubble = (arr) => {
   let tmp, c = 0;
 
@@ -319,12 +319,12 @@ new f(); // "test"
 ```
 
 ## Напишите функцию принимающую строку с именем файла и возвращающую его расширение
-```
+```javascript
 'some.class.js'.split('.').pop(); // "js"
 ```
 
 ## Привязка контекста (Bind, Call, Apply)
-```
+```javascript
 Методы call/apply вызывают функцию с заданным контекстом и аргументами.
 
 А bind не вызывает функцию. Он только возвращает «обёртку», которую мы можем вызвать позже, и которая передаст вызов в исходную функцию, с привязанным контекстом.
