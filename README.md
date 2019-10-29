@@ -6,7 +6,7 @@
 ```
 
 ## Hoisting
-```
+```javascript
 var a = 5;  
 function foo() {  
   console.log(a); // undefined  
