@@ -308,6 +308,15 @@ function fac(n) {
   return n ? n * fac(n - 1) : 1;
 }
 console.log(fac(5)); // 120
+
+function fact(n) {
+    let res = 1;
+    for (let i = 2; i <= n; i++) {
+        res *= i;
+    }
+    return res;
+}
+fact(5);// 120
 ```
 
 ##
