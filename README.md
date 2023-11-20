@@ -321,87 +321,70 @@ fact(5);// 120
 
 ##
 ```javascript
-let sortBubble = (arr) => {
-  let tmp, c = 0;
+function sortBubble(arr) {
+    const n = arr.length - 1;
 
-  for (let i = arr.length - 1; i > 0; i--) {
-    for (let j = 0; j < i; j++) {
-
-      if (arr[j] > arr[j+1]) {
-        tmp = arr[j];
-        arr[j] = arr[j+1];
-        arr[j+1] = tmp;
-        c++;
-      }
-
+    for (let i = n; i > 0; i--) {
+        for (let j = 0; j < i; j++) {
+            if (arr[j] > arr[j + 1]) {
+                const temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
     }
 
-    if (c === 0) {
-        break;
-    }
-  };
-
-  return arr;
+    return arr;
 }
 sortBubble( [5, 20, 3, 11, 1, 17, 3, 12, 8, 10, 22]); // [1, 3, 3, 5, 8, 10, 11, 12, 17, 20, 22]
 
+function quickSort(arr) {
+    if (arr.length <= 1) return arr;
 
-let a = [1, 12, 5, 26, 7, 14, 3, 7, 2, 3];
+    const pivot = arr[0];
+    const left = [];
+    const right = [];
 
-function quickSort( arr, left, right) {
-    let index = partition(arr, left, right);
-    if (left < index - 1)
-        quickSort(arr, left, index - 1);
-    if (index < right)
-        quickSort(arr, index, right);
-}
-
-function partition(arr, left, right) {
-    let pivot = arr[Math.floor((left + right) / 2)]
-      , i = left
-      , j = right
-      , tmp;
-
-    while (i <= j) {
-        while (arr[i] < pivot)
-            i++;
-        while (arr[j] > pivot)
-            j--;
-        if (i <= j) {
-            tmp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = tmp;
-            i++;
-            j--;
+    for(let i = 1; i < arr.length; i++) {
+        if (arr[i] < pivot) {
+            left.push(arr[i])
+        } else {
+            right.push(arr[i])
         }
     }
-    return i;
+    return [...quickSort(left), pivot, ...quickSort(right)];
 }
-quickSort(a, 0, a.length-1);
-console.log(a);
+quickSort([64, 34, 25, 12, 22, 11, 90]); // [11, 12, 22, 25, 34, 64, 90]
 
 
-let getMaxNumber = function(arr) {
-    let min = arr[0]
-    ,   max = min;
+function getMaxNumber(arr) {
+    let max = arr[0];
 
     for(let i = 0, l = arr.length; i < l; i++) {
-        if(arr[i] > max) max = arr[i];
-        if(arr[i] < min) min = arr[i];
+        if(arr[i] > max) {
+            max = arr[i];
+        }
     }
     return max;
 };
-console.log(getMaxNumber([2,4,55,67,9,0,6]));
+getMaxNumber([2,4,55,67,9,0,6]); // 67
 
 
-let i = 10, array = [];
-
-while (i--) {
-  array.push(function() {
-    return i + i;
-  });
+// Побитовый XOR двух одинаковых чисел дает 0, а XOR с 0 не меняет число.
+// Таким образом, если мы применим XOR ко всем элементам массива, то дублирующиеся элементы
+// "вычтутся" друг из друга, и останется только уникальный элемент.
+function singleNumber(nums) {
+    let result = 0;
+    
+    for (let num of nums) {
+        result ^= num;
+    }
+    
+    return result;
 }
-console.log( [array[0](), array[1]()] ); // [-2,-2]
+singleNumber([2,2,1]); // 1
+singleNumber([4,1,2,1,2]); // 4
+singleNumber([1]); // 1
 
 
 let A, B;
