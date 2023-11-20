@@ -289,6 +289,11 @@ delete x; // SyntaxError
 
 ## Fibonacci
 ```javascript
+function fibonacci(n) {
+    return n <= 1 ? n : fib(n - 1) + fib(n - 2);
+}
+fibonacci(8); // 21
+
 function fib(n) {
   let a = 1, b =1;
 
@@ -299,7 +304,7 @@ function fib(n) {
   };
   return b;
 }
-console.log(fib(7)); // 13
+fib(7); // 13
 ```
 
 ## Factorial
@@ -307,7 +312,7 @@ console.log(fib(7)); // 13
 function fac(n) {
   return n ? n * fac(n - 1) : 1;
 }
-console.log(fac(5)); // 120
+fac(5); // 120
 
 function fact(n) {
     let res = 1;
