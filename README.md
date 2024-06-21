@@ -289,10 +289,10 @@ delete x; // SyntaxError
 
 ## Fibonacci
 ```javascript
-function fibonacci(n) {
+function fib(n) {
     return n <= 1 ? n : fib(n - 1) + fib(n - 2);
 }
-fibonacci(8); // 21
+fib(8); // 21
 
 function fib(n) {
   let a = 1, b =1;
